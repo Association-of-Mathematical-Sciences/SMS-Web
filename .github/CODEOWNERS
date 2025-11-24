@@ -1,0 +1,5 @@
+# Defines the owner of the whole code repository
+* org/smc-dev
+
+# Owner of source code
+src/ @org/smc-dev
