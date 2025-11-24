@@ -22,11 +22,7 @@ jobs:
         uses: actions/checkout@v5
       - name: Install, build, and upload your site
         uses: withastro/action@v5
-        with:
-          path: . 
-          node-version: 24 
-          package-manager: pnpm@latest
-          build-cmd: pnpm run build 
+        
   deploy:
     needs: build
     runs-on: ubuntu-latest
