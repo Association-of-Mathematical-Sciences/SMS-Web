@@ -1,57 +1,17 @@
 ---
-const LIGHT_ICON = "/SMS-Web/delta.svg";   // shown in light mode
-const DARK_ICON  = "/SMS-Web/lambda.svg"; // shown in dark mode
+const DELTA = "/SMS-Web/delta.svg";   // dark icon
+const LAMBDA = "/SMS-Web/lambda.svg"; // light icon
 ---
 
 <button
-  id="theme-toggle"
+  id="themeToggle"
   type="button"
-  class="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white/70 px-3 py-2 shadow-sm backdrop-blur
-         hover:bg-white
-         dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+  class="rounded-xl border border-black/10 
+  bg-[#003049] dark:bg-white/70 px-3 py-2 text-sm 
+  font-semibold text-[#003049] backdrop-blur flex 
+  items-center gap-2"
   aria-label="Toggle theme"
->
-  <span class="sr-only">Toggle theme</span>
-
-  <!-- Light mode icon -->
-  <img
-    src={LIGHT_ICON}
-    alt=""
-    class="h-5 w-5 dark:hidden"
-    loading="lazy"
-    decoding="async"
-  />
-
-  <!-- Dark mode icon -->
-  <img
-    src={DARK_ICON}
-    alt=""
-    class="hidden h-5 w-5 dark:block"
-    loading="lazy"
-    decoding="async"
-  />
+  aria-pressed="false">
+  <img id="themeIconLight" src={LAMBDA} alt="lambda" aria-hidden="true" class="h-5 w-5" />
+  <img id="themeIconDark" src={DELTA} alt="delta" aria-hidden="true" class="h-5 w-5 hidden" />
 </button>
-
-<script is:inline>
-  const root = document.documentElement;
-  const btn = document.getElementById("theme-toggle");
-
-  function getTheme() {
-    const saved = localStorage.getItem("theme");
-    if (saved === "light" || saved === "dark") return saved;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  }
-
-  function applyTheme(theme) {
-    root.classList.toggle("dark", theme === "dark");
-    root.style.colorScheme = theme;
-    localStorage.setItem("theme", theme);
-  }
-
-  applyTheme(getTheme());
-
-  btn?.addEventListener("click", () => {
-    const next = root.classList.contains("dark") ? "light" : "dark";
-    applyTheme(next);
-  });
-</script>

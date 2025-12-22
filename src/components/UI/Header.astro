@@ -1,11 +1,16 @@
 ---
 import Logo from "./Logo.astro";
 import Navigation from "./Navigation.astro";
+import ThemeButton from "./ThemeButton.astro";
 ---
 
-<header class="sticky top-0 z-50 border-b border-black/10 bg-[#fef8ec]/80 backdrop-blur">
+<header class="sticky top-0 z-50 border-b border-black/10 bg-[#fef8ec]/80 backdrop-blur
+               dark:border-white/20 dark:bg-[#003049]/85">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
     <Logo />
-    <Navigation />
+    <div class="flex items-center gap-3">
+      <Navigation />
+      <ThemeButton />
+    </div>
   </div>
 </header>

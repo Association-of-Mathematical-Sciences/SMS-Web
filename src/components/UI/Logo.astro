@@ -1,21 +1,25 @@
 ---
 const {
-  href = "/",
+  href = "/SMS-Web/",
   title = "Association of Mathematical Sciences",
   subtitle = "Stevens Institute of Technology",
 } = Astro.props;
 ---
 
 <a href={href} class="flex items-center gap-3 no-underline">
-  <span class="grid h-11 w-11 place-items-center overflow-hidden rounded-2xl bg-[#fef8ec] ring-1 ring-black/10">
-    <img src="/SMS-Web/logos/logo1.svg" alt="AMS logo" class="h-9 w-auto" />
+  <span
+    class="grid h-11 w-11 place-items-center overflow-hidden rounded-2xl bg-[#fef8ec] ring-1 ring-black/10
+           dark:bg-[#003049] dark:ring-white/20"
+  >
+    <img src="/SMS-Web/logos/logo1.svg" alt="AMS logo" class="h-9 w-auto dark:hidden" />
+    <img src="/SMS-Web/logos/logo1_dark.svg" alt="AMS logo" class="hidden h-9 w-auto dark:block" />
   </span>
 
   <span class="hidden leading-tight sm:block">
-    <span class="block font-serif text-[15px] font-semibold text-[#003049]">
+    <span class="block font-serif text-[15px] font-semibold text-[#003049] dark:text-[#fef8ec]">
       {title}
     </span>
-    <span class="block text-xs font-medium text-slate-600">
+    <span class="block text-xs font-medium text-slate-600 dark:text-[#fef8ec]/80">
       {subtitle}
     </span>
   </span>

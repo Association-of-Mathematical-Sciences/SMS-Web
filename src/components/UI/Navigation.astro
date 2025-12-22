@@ -9,9 +9,7 @@ const navList: { href: string; label: string }[] = [
 
 const currentPath = Astro.url.pathname;
 
-const isActive = (href: string) => {
-  return currentPath === href;
-};
+const isActive = (href: string) => currentPath === href;
 ---
 
 <nav>
@@ -24,9 +22,10 @@ const isActive = (href: string) => {
           class:list={[
             "rounded-xl px-3 py-2 text-sm font-semibold transition",
             "hover:bg-[#003049]/10 hover:text-[#003049]",
+            "dark:hover:bg-white/10 dark:hover:text-[#fef8ec]",
             isActive(href)
-              ? "bg-[#003049] text-white hover:bg-[#003049] hover:text-white"
-              : "text-slate-700",
+              ? "bg-[#003049] text-[#fef8ec] hover:bg-[#003049] hover:text-[#fef8ec] dark:bg-[#fef8ec] dark:text-[#003049] dark:hover:bg-[#fef8ec]"
+              : "text-slate-700 dark:text-[#fef8ec]",
           ]}
         >
           {label}
@@ -37,11 +36,17 @@ const isActive = (href: string) => {
 
   <!-- Mobile (no JS) -->
   <details class="relative sm:hidden">
-    <summary class="list-none cursor-pointer rounded-xl border border-black/10 bg-white/70 px-3 py-2 text-sm font-semibold text-[#003049] backdrop-blur hover:bg-white">
+    <summary
+      class="list-none cursor-pointer rounded-xl border border-black/10 bg-white/70 px-3 py-2 text-sm font-semibold text-[#003049] backdrop-blur hover:bg-white
+             dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+    >
       Menu
     </summary>
 
-    <div class="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-lg">
+    <div
+      class="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-lg
+             dark:border-white/20 dark:bg-[#003049]"
+    >
       <ul class="p-2">
         {navList.map(({ href, label }) => (
           <li>
@@ -50,7 +55,10 @@ const isActive = (href: string) => {
               class:list={[
                 "block rounded-xl px-3 py-2 text-sm font-semibold transition",
                 "hover:bg-[#003049]/10 hover:text-[#003049]",
-                isActive(href) ? "bg-[#003049] text-white" : "text-slate-700",
+                "dark:hover:bg-white/10 dark:hover:text-[#fef8ec]",
+                isActive(href)
+                  ? "bg-[#003049] text-[#fef8ec] dark:bg-[#fef8ec] dark:text-[#003049]"
+                  : "text-slate-700 dark:text-[#fef8ec]",
               ]}
             >
               {label}
