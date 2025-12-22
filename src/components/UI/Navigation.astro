@@ -1,0 +1,63 @@
+---
+const navList: { href: string; label: string }[] = [
+  { href: "/SMS-Web/", label: "Home" },
+  { href: "/SMS-Web/about", label: "About" },
+  { href: "/SMS-Web/events", label: "Events" },
+  { href: "/SMS-Web/journal", label: "Journal" },
+  { href: "/SMS-Web/contact", label: "Contact" },
+];
+
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) => {
+  return currentPath === href;
+};
+---
+
+<nav>
+  <!-- Desktop -->
+  <ul class="hidden items-center gap-1 sm:flex">
+    {navList.map(({ href, label }) => (
+      <li>
+        <a
+          href={href}
+          class:list={[
+            "rounded-xl px-3 py-2 text-sm font-semibold transition",
+            "hover:bg-[#003049]/10 hover:text-[#003049]",
+            isActive(href)
+              ? "bg-[#003049] text-white hover:bg-[#003049] hover:text-white"
+              : "text-slate-700",
+          ]}
+        >
+          {label}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <!-- Mobile (no JS) -->
+  <details class="relative sm:hidden">
+    <summary class="list-none cursor-pointer rounded-xl border border-black/10 bg-white/70 px-3 py-2 text-sm font-semibold text-[#003049] backdrop-blur hover:bg-white">
+      Menu
+    </summary>
+
+    <div class="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-lg">
+      <ul class="p-2">
+        {navList.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                "block rounded-xl px-3 py-2 text-sm font-semibold transition",
+                "hover:bg-[#003049]/10 hover:text-[#003049]",
+                isActive(href) ? "bg-[#003049] text-white" : "text-slate-700",
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </details>
+</nav>

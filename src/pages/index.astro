@@ -1,17 +1,10 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import IndexContent from "../components/Content/IndexContent.astro";
 
+const pageTitle = "Home";
+const pageDescription = "Official home page of the Stevens Institute of Technology Association of Mathematical Sciences.";
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Stevens Mathematical Club</h1>
-		<h2>Currently in development.</h2>
-	</body>
-</html>
+<BaseLayout pageTitle={pageTitle}, pageDescription={pageDescription}>
+	<IndexContent/>
+</BaseLayout>

@@ -1,0 +1,35 @@
+---
+import "../styles/global.css";
+import Footer from "../components/UI/Footer.astro";
+import Header from "../components/UI/Header.astro";
+const { pageTitle, pageDescription } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="generator" content={Astro.generator}/>
+    <meta name="description" content={pageDescription}/>
+    <meta name="author" content="Stevens Mathematical Club Development Group"/>
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription}/>
+    <meta property="og:type" content="website"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/SMS-Web/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/SMS-Web/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/SMS-Web/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/SMS-Web/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/SMS-Web/favicon-32x32.png">
+    <link rel="icon" type="image/x-icon" href="/SMS-Web/favicon.ico">
+    <link rel="manifest" href="/SMS-Web/site.webmanifest">
+    <title>{pageTitle}</title>
+</head>
+<body>
+    <Header />
+    <main>
+        <slot />
+    </main>
+    <Footer />
+</body>
+</html>

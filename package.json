@@ -9,6 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.5"
+    "@playform/compress": "^0.2.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.5",
+    "tailwindcss": "^4.1.18"
   }
 }

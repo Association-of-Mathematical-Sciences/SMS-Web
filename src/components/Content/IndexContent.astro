@@ -1,0 +1,298 @@
+---
+type Card = { title: string; desc: string; href: string; cta: string };
+type EventPreview = { title: string; tag: string; date: string; where: string; href: string };
+type Leader = {
+  role: string;
+  name: string;
+  meta?: string;
+  image?: string;
+  href?: string;
+};
+
+const quickCards: Card[] = [
+  {
+    title: "Events",
+    desc: "Talks, workshops, problem nights, and guest speakers throughout the semester.",
+    href: "/SMS-Web/events",
+    cta: "See events",
+  },
+  {
+    title: "Journal",
+    desc: "Student writing and research notes—expository articles welcome.",
+    href: "/SMS-Web/journal",
+    cta: "Read the journal",
+  },
+  {
+    title: "About",
+    desc: "What we do, how we run meetings, and how the organization is structured.",
+    href: "/SMS-Web/about",
+    cta: "Learn more",
+  },
+  {
+    title: "Contact",
+    desc: "Speaker ideas, collaborations, and general questions.",
+    href: "/SMS-Web/contact",
+    cta: "Get in touch",
+  },
+];
+
+const upcoming: EventPreview[] = [
+  {
+    title: "Weekly Problem Solving Session",
+    tag: "Problem Solving",
+    date: "Thursdays · 6:00 PM",
+    where: "Babbio 104",
+    href: "/SMS-Web/events",
+  },
+  {
+    title: "Faculty Talk: Modern Optimization",
+    tag: "Talk",
+    date: "Feb 6 · 5:30 PM",
+    where: "TBD",
+    href: "/SMS-Web/events",
+  },
+  {
+    title: "Contest / Putnam Prep",
+    tag: "Workshop",
+    date: "Feb 13 · 6:00 PM",
+    where: "TBD",
+    href: "/SMS-Web/events",
+  },
+];
+
+// Update these with real names + correct year folders.
+// Images: /public/leadership/2026/president.jpg etc.
+const leaders: Leader[] = [
+  {
+    role: "President",
+    name: "Erik Hoxhaj",
+    meta: "Class of 2028 · Mathematics",
+    // image: "/leadership/2026/president.jpg",
+    href: "https://www.linkedin.com/in/erikhoxhaj/"
+  },
+  {
+    role: "Vice President",
+    name: "Connor Kravatz",
+    meta: "Class of 2027 · Mathematics",
+    // image: "/leadership/2027/vice-president.jpg",
+    href: "https://www.linkedin.com/in/kravatz/"
+  },
+  {
+    role: "Treasurer",
+    name: "John Conklin",
+    meta: "Class of 2028 · Mathematics",
+    // image: "/leadership/2026/treasurer.jpg",
+    href:"https://www.linkedin.com/in/john-conklin-b610102b5/"
+  },
+  {
+    role: "Secretary/Head of Tech",
+    name: "Joshua Hizgiaev",
+    meta: "Class of 2026 · Computer Science",
+    // image: "/leadership/2026/treasurer.jpg",
+    href: "https://www.linkedin.com/in/joshuahizgiaev/"
+  }
+];
+---
+
+<section class="relative overflow-hidden bg-[#fef8ec]">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-[#c1121f]/10 blur-3xl"></div>
+    <div class="absolute -bottom-48 -right-30 h-105 w-105 rounded-full bg-[#003049]/10 blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6 pb-12 pt-14 sm:pb-16 sm:pt-20">
+    <div class="max-w-3xl">
+      <h1 class="mt-4 font-serif text-4xl leading-tight text-[#003049] sm:text-6xl">
+        Association of Mathematical Sciences
+      </h1>
+
+      <p class="mt-4 text-lg text-slate-700">
+        Talks, problem solving, and student research—organized by students for the Stevens community.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/SMS-Web/events"
+          class="inline-flex items-center rounded-xl bg-[#c1121f] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+        >
+          View Events
+        </a>
+
+        <a
+          href="/SMS-Web/journal"
+          class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50"
+        >
+          Read the Journal
+        </a>
+
+        <a
+          href="/SMS-Web/about"
+          class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50"
+        >
+          About AMS
+        </a>
+      </div>
+
+      <dl class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl border border-black/10 bg-white/60 p-4">
+          <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600">Focus</dt>
+          <dd class="mt-1 font-semibold text-[#003049]">Community</dd>
+        </div>
+        <div class="rounded-2xl border border-black/10 bg-white/60 p-4">
+          <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600">Programming</dt>
+          <dd class="mt-1 font-semibold text-[#003049]">Talks + Workshops</dd>
+        </div>
+        <div class="rounded-2xl border border-black/10 bg-white/60 p-4">
+          <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600">Journal</dt>
+          <dd class="mt-1 font-semibold text-[#003049]">Student Writing</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6 pb-14">
+    <h2 class="font-serif text-2xl text-[#003049] sm:text-3xl">Explore</h2>
+    <p class="mt-2 max-w-2xl text-slate-700">
+      Quick links to the parts of the site you'll use most.
+    </p>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {quickCards.map((c) => (
+        <a
+          href={c.href}
+          class="group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md"
+        >
+          <h3 class="font-serif text-lg text-[#003049]">{c.title}</h3>
+          <p class="mt-2 text-sm text-slate-700">{c.desc}</p>
+          <p class="mt-4 text-sm font-semibold text-[#003049] group-hover:underline">
+            {c.cta} →
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- EVENTS PREVIEW -->
+  <div class="mx-auto max-w-6xl px-6 pb-14">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="font-serif text-2xl text-[#003049] sm:text-3xl">Upcoming events</h2>
+        <p class="mt-2 text-slate-700">A preview—see the Events page for full details.</p>
+      </div>
+
+      <a
+        href="/SMS-Web/events"
+        class="hidden rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-slate-50 sm:inline-flex"
+      >
+        View all
+      </a>
+    </div>
+
+    <div class="mt-8 grid gap-4 lg:grid-cols-3">
+      {upcoming.map((ev) => (
+        <article class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between gap-3">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-600">{ev.tag}</p>
+            <a href={ev.href} class="text-sm font-semibold text-[#c1121f] hover:underline">
+              Details
+            </a>
+          </div>
+
+          <h3 class="mt-2 font-serif text-lg text-[#003049]">{ev.title}</h3>
+          <p class="mt-2 text-sm text-slate-700">
+            <span class="font-semibold">{ev.date}</span> · {ev.where}
+          </p>
+        </article>
+      ))}
+    </div>
+
+    <a
+      href="/SMS-Web/events"
+      class="mt-6 inline-flex rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-slate-50 sm:hidden"
+    >
+      View all events
+    </a>
+  </div>
+
+  <!-- JOURNAL SPOTLIGHT -->
+  <div class="mx-auto max-w-6xl px-6 pb-14">
+    <div class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10">
+      <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-wide text-slate-600">Student journal</p>
+          <h2 class="mt-2 font-serif text-2xl text-[#003049] sm:text-3xl">
+            Undergraduate writing and research.
+          </h2>
+          <p class="mt-3 text-slate-700">
+            Expository articles, reading notes, and student research—written for an undergraduate audience.
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/SMS-Web/journal"
+              class="inline-flex items-center rounded-xl bg-[#003049] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+            >
+              View journal
+            </a>
+            <a
+              href="/SMS-Web/contact"
+              class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50"
+            >
+              Editorial contact
+            </a>
+          </div>
+        </div>
+
+        <aside class="w-full max-w-sm">
+          <div class="aspect-4/5 rounded-2xl border border-black/10 bg-[#fef8ec] p-5 text-sm text-slate-700">
+            <p class="font-semibold text-[#003049]">Featured</p>
+            <p class="mt-2">
+              Replace this with a journal cover image or a featured article preview card later.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP -->
+  <div class="mx-auto max-w-6xl px-6 pb-20">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="font-serif text-2xl text-[#003049] sm:text-3xl">Current leadership</h2>
+        <p class="mt-2 text-slate-700">For official inquiries, use the Contact page.</p>
+      </div>
+
+      <a href="/SMS-Web/about" class="hidden text-sm font-semibold text-[#003049] hover:underline sm:inline">
+        Learn more →
+      </a>
+    </div>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {leaders.map((p) => (
+        <article class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+          <div class="flex items-start gap-4">
+            <div class="h-14 w-14 overflow-hidden rounded-2xl border border-black/10 bg-[#fef8ec]">
+              <a href={p.href ?? "/SMS-Web/"}><img
+                src={p.image ?? "/SMS-Web/leadership/placeholder.png"}
+                alt={`${p.role}: ${p.name}`}
+                loading="lazy"
+                class="h-full w-full object-cover"
+              /></a>
+            </div>
+
+            <div class="min-w-0">
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-600">{p.role}</p>
+              <h3 class="mt-1 truncate font-serif text-lg text-[#003049]">{p.name}</h3>
+              {p.meta && <p class="mt-1 text-sm text-slate-700">{p.meta}</p>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <a href="/SMS-Web/about" class="mt-6 inline-flex text-sm font-semibold text-[#003049] hover:underline sm:hidden">
+      Learn more →
+    </a>
+  </div>
+</section>

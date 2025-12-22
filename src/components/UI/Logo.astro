@@ -1,0 +1,22 @@
+---
+const {
+  href = "/",
+  title = "Association of Mathematical Sciences",
+  subtitle = "Stevens Institute of Technology",
+} = Astro.props;
+---
+
+<a href={href} class="flex items-center gap-3 no-underline">
+  <span class="grid h-11 w-11 place-items-center overflow-hidden rounded-2xl bg-[#fef8ec] ring-1 ring-black/10">
+    <img src="/SMS-Web/logos/logo1.svg" alt="AMS logo" class="h-9 w-auto" />
+  </span>
+
+  <span class="hidden leading-tight sm:block">
+    <span class="block font-serif text-[15px] font-semibold text-[#003049]">
+      {title}
+    </span>
+    <span class="block text-xs font-medium text-slate-600">
+      {subtitle}
+    </span>
+  </span>
+</a>
