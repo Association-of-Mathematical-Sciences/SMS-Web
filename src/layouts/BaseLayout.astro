@@ -23,7 +23,23 @@ const { pageTitle, pageDescription } = Astro.props;
     <link rel="icon" type="image/png" sizes="32x32" href="/SMS-Web/favicon-32x32.png">
     <link rel="icon" type="image/x-icon" href="/SMS-Web/favicon.ico">
     <link rel="manifest" href="/SMS-Web/site.webmanifest">
-    <script src="../scripts/theme.js"></script>
+    <script is:inline>
+        (() => {
+            try {
+            const key = "theme";
+            const saved = localStorage.getItem(key);
+            const theme =
+                saved === "dark" || saved === "light"
+                ? saved
+                : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+            document.documentElement.classList.toggle("dark", theme === "dark");
+            document.documentElement.style.colorScheme = theme;
+
+            if (!saved) localStorage.setItem(key, theme);
+            } catch {}
+        })();
+    </script>
     <title>{pageTitle}</title>
 </head>
 <body>
@@ -32,5 +48,6 @@ const { pageTitle, pageDescription } = Astro.props;
         <slot />
     </main>
     <Footer />
+    <script src="../scripts/theme.js"></script>
 </body>
 </html>

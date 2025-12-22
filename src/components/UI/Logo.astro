@@ -8,18 +8,28 @@ const {
 
 <a href={href} class="flex items-center gap-3 no-underline">
   <span
-    class="grid h-11 w-11 place-items-center overflow-hidden rounded-2xl bg-[#fef8ec] ring-1 ring-black/10
+    class="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-2xl bg-[#fef8ec] ring-1 ring-black/10
            dark:bg-[#003049] dark:ring-white/20"
   >
     <img src="/SMS-Web/logos/logo1.svg" alt="AMS logo" class="h-9 w-auto dark:hidden" />
     <img src="/SMS-Web/logos/logo1_dark.svg" alt="AMS logo" class="hidden h-9 w-auto dark:block" />
   </span>
 
-  <span class="hidden leading-tight sm:block">
-    <span class="block font-serif text-[15px] font-semibold text-[#003049] dark:text-[#fef8ec]">
+  {/* No truncate: wrap instead */}
+  <span class="min-w-0 leading-tight">
+    <span
+      class="block font-serif font-semibold text-[#003049] dark:text-[#fef8ec]
+             text-[13px] sm:text-[15px] md:text-[16px]
+             leading-snug whitespace-normal"
+    >
       {title}
     </span>
-    <span class="block text-xs font-medium text-slate-600 dark:text-[#fef8ec]/80">
+
+    <span
+      class="block text-slate-600 dark:text-[#fef8ec]/80
+             text-[11px] sm:text-xs
+             leading-snug whitespace-normal"
+    >
       {subtitle}
     </span>
   </span>
