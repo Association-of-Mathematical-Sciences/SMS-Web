@@ -6,12 +6,16 @@ const LAMBDA = "/lambda.svg"; // light icon
 <button
   id="themeToggle"
   type="button"
-  class="rounded-xl border border-black/10 
-  bg-[#003049] dark:bg-white/70 px-3 py-2 text-sm 
-  font-semibold text-[#003049] backdrop-blur flex 
-  items-center gap-2"
+  class="shrink-0 rounded-xl border border-black/10 bg-[#003049]
+         p-2 sm:px-3 sm:py-2
+         min-h-5 min-w-5
+         text-sm font-semibold text-[#fef8ec]
+         flex items-center justify-center gap-2
+         transition hover:opacity-90
+         dark:border-white/20 dark:bg-[#fef8ec] dark:text-[#003049] dark:hover:bg-white"
   aria-label="Toggle theme"
-  aria-pressed="false">
-  <img id="themeIconLight" src={LAMBDA} alt="lambda" aria-hidden="true" class="h-5 w-5" />
-  <img id="themeIconDark" src={DELTA} alt="delta" aria-hidden="true" class="h-5 w-5 hidden" />
+  aria-pressed="false"
+>
+  <img id="themeIconLight" src={LAMBDA} alt="lambda" aria-hidden="true" class="h-5 w-5 sm:h-5 sm:w-5" />
+  <img id="themeIconDark" src={DELTA} alt="delta" aria-hidden="true" class="h-5 w-5 sm:h-5 sm:w-5 hidden" />
 </button>
