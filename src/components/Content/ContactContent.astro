@@ -1,0 +1,88 @@
+---
+type Social = { label: string; href: string; note?: string };
+
+const socials: Social[] = [
+  { label: "Instagram", href: "https://www.instagram.com/stevensmathclub/" },
+  { label: "YouTube", href: "https://www.youtube.com/@StevensMathClub" },
+  { label: "GitHub", href: "https://github.com/Association-of-Mathematical-Sciences" },
+  { label: "Discord", href: "https://discord.gg/9JwaZKsfdR" },
+];
+
+// TODO: replace with your real official email
+const OFFICIAL_EMAIL = "ams@stevens.edu";
+---
+
+<section class="bg-[#fef8ec] dark:bg-[#003049]">
+  <div class="mx-auto max-w-6xl px-6 py-14 sm:py-18">
+    <header class="max-w-3xl">
+      <h1 class="font-serif text-3xl text-[#003049] dark:text-[#fef8ec] sm:text-4xl">
+        Contact
+      </h1>
+      <p class="mt-3 text-slate-700 dark:text-[#fef8ec]/80">
+        For questions, collaboration ideas, and official inquiries, reach out using the email below
+        or through our platforms.
+      </p>
+    </header>
+
+    <!-- Official email -->
+    <div class="mt-10">
+      <h2 class="font-serif text-xl text-[#003049] dark:text-[#fef8ec] sm:text-2xl">
+        Official club email
+      </h2>
+
+      <div
+        class="mt-4 rounded-3xl border border-black/10 bg-white p-6 shadow-sm
+               dark:border-white/20 dark:bg-white/10"
+      >
+        <p class="text-sm font-semibold text-slate-700 dark:text-[#fef8ec]/80">
+          Email us for official matters:
+        </p>
+
+        <a
+          href={`mailto:${OFFICIAL_EMAIL}`}
+          class="mt-3 inline-flex items-center gap-2 rounded-2xl bg-[#003049] px-5 py-3 text-sm font-semibold text-[#fef8ec]
+                 hover:opacity-90 transition
+                 dark:bg-[#fef8ec] dark:text-[#003049]"
+        >
+          {OFFICIAL_EMAIL}
+          <span aria-hidden="true">→</span>
+        </a>
+
+        <p class="mt-4 text-sm text-slate-700 dark:text-[#fef8ec]/80">
+          Include your name, Stevens affiliation (if applicable), and a short description of your request. 
+          NOTE: Official email has NOT been confirmed, fake email provided for now.
+        </p>
+      </div>
+    </div>
+
+    <!-- Socials -->
+    <div class="mt-14">
+      <h2 class="font-serif text-xl text-[#003049] dark:text-[#fef8ec] sm:text-2xl">
+        Links
+      </h2>
+      <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80">
+        Follow updates and resources across platforms.
+      </p>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {socials.map((s) => (
+          <a
+            href={s.href}
+            class="group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition
+                   hover:-translate-y-0.5 hover:shadow-md hover:bg-slate-50
+                   dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p class="text-sm font-semibold text-[#003049] dark:text-[#fef8ec]">
+              {s.label}
+            </p>
+            <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">
+              Open <span class="ml-1 text-[#c1121f] dark:text-[#fef8ec] group-hover:underline">→</span>
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

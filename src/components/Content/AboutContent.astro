@@ -1,0 +1,55 @@
+---
+const IMAGE_SRC = "/SMS-Web/about/placeholder.jpg"; // placeholder (put any image here)
+const IMAGE_ALT = "Association of Mathematical Sciences club photo (placeholder)";
+---
+
+<section class="bg-[#fef8ec] dark:bg-[#003049]">
+  <div class="mx-auto max-w-6xl px-6 py-14 sm:py-18">
+    <header class="max-w-3xl">
+      <h1 class="font-serif text-3xl text-[#003049] dark:text-[#fef8ec] sm:text-4xl">
+        About
+      </h1>
+      <p class="mt-3 text-slate-700 dark:text-[#fef8ec]/80">
+        A brief overview of the Association of Mathematical Sciences.
+      </p>
+    </header>
+
+    <!-- Club photo -->
+    <div class="mt-10">
+      <figure class="rounded-3xl border border-black/10 bg-white p-3 shadow-sm dark:border-white/20 dark:bg-white/10">
+        <!-- themed border frame -->
+        <div class="rounded-2xl border-2 border-[#c1121f]/40 bg-[#fef8ec] p-2 dark:border-[#fef8ec]/30 dark:bg-[#003049]">
+          <img
+            src={IMAGE_SRC}
+            alt={IMAGE_ALT}
+            loading="lazy"
+            class="aspect-video w-full rounded-xl object-cover"
+          />
+        </div>
+        <figcaption class="mt-3 text-sm text-slate-600 dark:text-[#fef8ec]/70">
+          Club photo (placeholder)
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="mt-10 space-y-5">
+    <p class="text-base leading-relaxed text-slate-700 dark:text-[#fef8ec]/80">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nulla sit amet
+        tincidunt laoreet, turpis arcu bibendum purus, a interdum sapien urna a nisi. Integer
+        ac velit sed risus accumsan tincidunt.
+    </p>
+
+    <p class="text-base leading-relaxed text-slate-700 dark:text-[#fef8ec]/80">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin fermentum, urna at
+        consequat placerat, lorem arcu cursus nisl, et ultricies metus libero sit amet turpis.
+        Donec vitae odio ut libero vestibulum bibendum.
+    </p>
+
+    <p class="text-base leading-relaxed text-slate-700 dark:text-[#fef8ec]/80">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel sem at mauris
+        convallis facilisis. Nam euismod, arcu sed pulvinar interdum, velit elit viverra magna,
+        at vulputate justo mi a magna.
+    </p>
+    </div>
+  </div>
+</section>
