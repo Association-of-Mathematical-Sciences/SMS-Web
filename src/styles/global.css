@@ -2,12 +2,83 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
-  body {
-    background-color: #fef8ec;
-    color: #0f172a; /* slate-900-ish */
-  }
-  .dark body {
-    background-color: #003049;
-    color: #fef8ec;
-  }
+	body {
+		background-color: #fef8ec;
+		color: #0f172a; /* slate-900-ish */
+	}
+	.dark body {
+		background-color: #003049;
+		color: #fef8ec;
+	}
+}
+
+@layer utilities {
+	@keyframes ams-fade-up {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+			filter: blur(4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+			filter: blur(0);
+		}
+	}
+
+	@keyframes ams-scale-in {
+		from {
+			opacity: 0;
+			transform: scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	.ams-reveal {
+		opacity: 0;
+		animation: ams-fade-up 700ms ease-out forwards;
+	}
+
+	.ams-reveal-fast {
+		opacity: 0;
+		animation: ams-fade-up 520ms ease-out forwards;
+	}
+
+	.ams-pop {
+		opacity: 0;
+		animation: ams-scale-in 520ms ease-out forwards;
+	}
+
+	/* Stagger helpers (use as classes) */
+	.ams-d-0 {
+		animation-delay: 0ms;
+	}
+	.ams-d-1 {
+		animation-delay: 90ms;
+	}
+	.ams-d-2 {
+		animation-delay: 180ms;
+	}
+	.ams-d-3 {
+		animation-delay: 270ms;
+	}
+	.ams-d-4 {
+		animation-delay: 360ms;
+	}
+	.ams-d-5 {
+		animation-delay: 450ms;
+	}
+
+	/* Reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.ams-reveal,
+		.ams-reveal-fast,
+		.ams-pop {
+			opacity: 1 !important;
+			animation: none !important;
+		}
+	}
 }

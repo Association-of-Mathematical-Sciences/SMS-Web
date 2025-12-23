@@ -110,41 +110,55 @@ const leaders: Leader[] = [
 ---
 
 <section class="relative overflow-hidden bg-[#fef8ec] dark:bg-[#003049]">
+  <!-- soft background blobs -->
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-[#c1121f]/10 blur-3xl dark:bg-[#c1121f]/20"></div>
+    <div class="absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-[#c1121f]/10 blur-3xl"></div>
     <div class="absolute -bottom-48 -right-30 h-105 w-105 rounded-full bg-[#003049]/10 blur-3xl dark:bg-white/10"></div>
   </div>
 
+  <!-- HERO -->
   <div class="mx-auto max-w-6xl px-6 pb-12 pt-14 sm:pb-16 sm:pt-20">
     <div class="max-w-3xl">
-      <h1 class="mt-4 font-serif text-4xl leading-tight text-[#003049] dark:text-[#fef8ec] sm:text-6xl">
+      <h1
+        class="mt-4 font-serif text-4xl leading-tight text-[#003049] dark:text-[#fef8ec] sm:text-6xl
+               ams-reveal ams-d-0"
+      >
         Association of Mathematical Sciences
       </h1>
 
-      <p class="mt-4 text-lg text-slate-700 dark:text-[#fef8ec]/80">
+      <p class="mt-4 text-lg text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
         Talks, problem solving, and student research—organized by students for the Stevens community.
       </p>
 
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/events"
-           class="inline-flex items-center rounded-xl bg-[#c1121f] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90">
+      <div class="mt-8 flex flex-wrap gap-3 ams-reveal ams-d-2">
+        <a
+          href="/events"
+          class="inline-flex items-center rounded-xl bg-[#c1121f] px-5 py-3 text-sm font-semibold text-white shadow-sm
+                 transition hover:opacity-90"
+        >
           View Events
         </a>
 
-        <a href="/journal"
-           class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50
-                  dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
+        <a
+          href="/journal"
+          class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm
+                 transition hover:bg-slate-50
+                 dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+        >
           Read the Journal
         </a>
 
-        <a href="/about"
-           class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50
-                  dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
+        <a
+          href="/about"
+          class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm
+                 transition hover:bg-slate-50
+                 dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+        >
           About AMS
         </a>
       </div>
 
-      <dl class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <dl class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 ams-reveal ams-d-3">
         <div class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10">
           <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">Focus</dt>
           <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">Community</dd>
@@ -161,17 +175,29 @@ const leaders: Leader[] = [
     </div>
   </div>
 
+  <!-- EXPLORE -->
   <div class="mx-auto max-w-6xl px-6 pb-14">
-    <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">Explore</h2>
-    <p class="mt-2 max-w-2xl text-slate-700 dark:text-[#fef8ec]/80">
+    <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0">
+      Explore
+    </h2>
+    <p class="mt-2 max-w-2xl text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
       Quick links to the parts of the site you'll use most.
     </p>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {quickCards.map((c) => (
-        <a href={c.href}
-           class="group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md
-                  dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15">
+      {quickCards.map((c, i) => (
+        <a
+          href={c.href}
+          class:list={[
+            "group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md",
+            "dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15",
+            "ams-pop",
+            i === 0 && "ams-d-0",
+            i === 1 && "ams-d-1",
+            i === 2 && "ams-d-2",
+            i === 3 && "ams-d-3",
+          ]}
+        >
           <h3 class="font-serif text-lg text-[#003049] dark:text-[#fef8ec]">{c.title}</h3>
           <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">{c.desc}</p>
           <p class="mt-4 text-sm font-semibold text-[#003049] dark:text-[#fef8ec] group-hover:underline">
@@ -186,23 +212,43 @@ const leaders: Leader[] = [
   <div class="mx-auto max-w-6xl px-6 pb-14">
     <div class="flex items-end justify-between gap-4">
       <div>
-        <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">Upcoming events</h2>
-        <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80">A preview—see the Events page for full details.</p>
+        <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0">
+          Upcoming events
+        </h2>
+        <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
+          A preview—see the Events page for full details.
+        </p>
       </div>
 
-      <a href="/events"
-         class="hidden rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-slate-50 sm:inline-flex
-                dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
+      <a
+        href="/events"
+        class="hidden rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm transition hover:bg-slate-50
+               sm:inline-flex
+               dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+      >
         View all
       </a>
     </div>
 
     <div class="mt-8 grid gap-4 lg:grid-cols-3">
-      {upcoming.map((ev) => (
-        <article class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/20 dark:bg-white/10">
+      {upcoming.map((ev, i) => (
+        <article
+          class:list={[
+            "rounded-2xl border border-black/10 bg-white p-5 shadow-sm",
+            "dark:border-white/20 dark:bg-white/10",
+            "ams-pop",
+            i === 0 && "ams-d-0",
+            i === 1 && "ams-d-1",
+            i === 2 && "ams-d-2",
+          ]}
+        >
           <div class="flex items-center justify-between gap-3">
-            <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">{ev.tag}</p>
-            <a href={ev.href} class="text-sm font-semibold text-[#c1121f] hover:underline">Details</a>
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+              {ev.tag}
+            </p>
+            <a href={ev.href} class="text-sm font-semibold text-[#c1121f] hover:underline dark:text-[#fef8ec]">
+              Details
+            </a>
           </div>
 
           <h3 class="mt-2 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">{ev.title}</h3>
@@ -213,19 +259,24 @@ const leaders: Leader[] = [
       ))}
     </div>
 
-    <a href="/events"
-       class="mt-6 inline-flex rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-slate-50 sm:hidden
-              dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
+    <a
+      href="/events"
+      class="mt-6 inline-flex rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm transition hover:bg-slate-50
+             sm:hidden
+             dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+    >
       View all events
     </a>
   </div>
 
   <!-- JOURNAL SPOTLIGHT -->
   <div class="mx-auto max-w-6xl px-6 pb-14">
-    <div class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10 dark:border-white/20 dark:bg-white/10">
+    <div class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10 dark:border-white/20 dark:bg-white/10 ams-reveal">
       <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
         <div class="max-w-2xl">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">Student journal</p>
+          <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+            Student journal
+          </p>
           <h2 class="mt-2 font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">
             Undergraduate writing and research.
           </h2>
@@ -234,20 +285,24 @@ const leaders: Leader[] = [
           </p>
 
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href="/journal"
-               class="inline-flex items-center rounded-xl bg-[#003049] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90
-                      dark:bg-[#fef8ec] dark:text-[#003049]">
+            <a
+              href="/journal"
+              class="inline-flex items-center rounded-xl bg-[#003049] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90
+                     dark:bg-[#fef8ec] dark:text-[#003049]"
+            >
               View journal
             </a>
-            <a href="/contact"
-               class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50
-                      dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
+            <a
+              href="/contact"
+              class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-slate-50
+                     dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+            >
               Editorial contact
             </a>
           </div>
         </div>
 
-        <aside class="w-full max-w-sm">
+        <aside class="w-full max-w-sm ams-pop ams-d-1">
           <div class="aspect-4/5 rounded-2xl border border-black/10 bg-[#fef8ec] p-5 text-sm text-slate-700
                       dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec]/80">
             <p class="font-semibold text-[#003049] dark:text-[#fef8ec]">Featured</p>
@@ -264,73 +319,81 @@ const leaders: Leader[] = [
   <div class="mx-auto max-w-6xl px-6 pb-20">
     <div class="flex items-end justify-between gap-4">
       <div>
-        <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">Current leadership</h2>
-        <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80">For official inquiries, use the Contact page.</p>
+        <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0">
+          Current leadership
+        </h2>
+        <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
+          For official inquiries, use the Contact page.
+        </p>
       </div>
 
-      <a href="/about" class="hidden text-sm font-semibold text-[#003049] hover:underline sm:inline dark:text-[#fef8ec]">
+      <a
+        href="/about"
+        class="hidden text-sm font-semibold text-[#003049] hover:underline sm:inline dark:text-[#fef8ec]
+               ams-reveal ams-d-2"
+      >
         Learn more →
       </a>
     </div>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {leaders.map((p) => (
-      <article
-        class="group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition
-              hover:-translate-y-0.5 hover:shadow-md
-              dark:border-white/20 dark:bg-white/10"
-      >
-        <div class="flex items-start gap-4">
-          <a
-            href={p.href ?? "/"}
-            class="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-[#fef8ec] transition
-                  group-hover:ring-2 group-hover:ring-[#c1121f]/35 group-hover:ring-offset-2 group-hover:ring-offset-[#fef8ec]
-                  dark:border-white/20 dark:bg-white/10
-                  dark:group-hover:ring-[#fef8ec]/35 dark:group-hover:ring-offset-[#003049]"
-            aria-label={`${p.role}: ${p.name}`}
-          >
-            <img
-              src={p.image ?? "/leadership/placeholder.png"}
-              alt={`${p.role}: ${p.name}`}
-              loading="lazy"
-              class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-            />
+      {leaders.map((p, i) => (
+        <article
+          class:list={[
+            "group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
+            "dark:border-white/20 dark:bg-white/10",
+            "ams-pop",
+            i % 6 === 0 && "ams-d-0",
+            i % 6 === 1 && "ams-d-1",
+            i % 6 === 2 && "ams-d-2",
+            i % 6 === 3 && "ams-d-3",
+            i % 6 === 4 && "ams-d-4",
+            i % 6 === 5 && "ams-d-5",
+          ]}
+        >
+          <div class="flex items-start gap-4">
+            <a
+              href={p.href ?? "/"}
+              class="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-[#fef8ec] transition
+                     group-hover:ring-2 group-hover:ring-[#c1121f]/35 group-hover:ring-offset-2 group-hover:ring-offset-[#fef8ec]
+                     dark:border-white/20 dark:bg-white/10
+                     dark:group-hover:ring-[#fef8ec]/35 dark:group-hover:ring-offset-[#003049]"
+              aria-label={`${p.role}: ${p.name}`}
+            >
+              <img
+                src={p.image ?? "/leadership/placeholder.png"}
+                alt={`${p.role}: ${p.name}`}
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+              />
+              <span class="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/5 dark:group-hover:bg-white/5" />
+            </a>
 
-            {/* subtle overlay on hover */}
-            <span
-              class="pointer-events-none absolute inset-0 bg-black/0 transition
-                    group-hover:bg-black/5 dark:group-hover:bg-white/5"
-            />
-          </a>
-
-          <div class="min-w-0">
-            <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
-              {p.role}
-            </p>
-
-            <h3 class="mt-1 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
-              <a
-                href={p.href ?? "/"}
-                class="inline-block transition group-hover:underline decoration-[#c1121f]/60 underline-offset-4
-                      dark:decoration-[#fef8ec]/60"
-              >
-                {p.name}
-              </a>
-            </h3>
-
-            {p.meta && (
-              <p class="mt-1 text-sm text-slate-700 dark:text-[#fef8ec]/80">
-                {p.meta}
+            <div class="min-w-0">
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+                {p.role}
               </p>
-            )}
+              <h3 class="mt-1 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+                <a
+                  href={p.href ?? "/"}
+                  class="inline-block transition group-hover:underline decoration-[#c1121f]/60 underline-offset-4
+                         dark:decoration-[#fef8ec]/60"
+                >
+                  {p.name}
+                </a>
+              </h3>
+              {p.meta && <p class="mt-1 text-sm text-slate-700 dark:text-[#fef8ec]/80">{p.meta}</p>}
+            </div>
           </div>
-        </div>
-      </article>
-    ))}
-</div>
+        </article>
+      ))}
+    </div>
 
-
-    <a href="/about" class="mt-6 inline-flex text-sm font-semibold text-[#003049] hover:underline sm:hidden dark:text-[#fef8ec]">
+    <a
+      href="/about"
+      class="mt-6 inline-flex text-sm font-semibold text-[#003049] hover:underline sm:hidden dark:text-[#fef8ec]
+             ams-reveal ams-d-2"
+    >
       Learn more →
     </a>
   </div>
