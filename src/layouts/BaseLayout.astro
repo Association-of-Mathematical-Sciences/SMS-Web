@@ -26,17 +26,17 @@ const { pageTitle, pageDescription } = Astro.props;
     <script is:inline>
         (() => {
             try {
-            const key = "theme";
-            const saved = localStorage.getItem(key);
-            const theme =
-                saved === "dark" || saved === "light"
-                ? saved
-                : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                const key = "theme";
+                const saved = localStorage.getItem(key);
+                const theme =
+                    saved === "dark" || saved === "light"
+                    ? saved
+                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 
-            document.documentElement.classList.toggle("dark", theme === "dark");
-            document.documentElement.style.colorScheme = theme;
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                document.documentElement.style.colorScheme = theme;
 
-            if (!saved) localStorage.setItem(key, theme);
+                if (!saved) localStorage.setItem(key, theme);
             } catch {}
         })();
     </script>

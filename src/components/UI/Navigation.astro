@@ -9,7 +9,14 @@ const navList: { href: string; label: string }[] = [
 
 const currentPath = Astro.url.pathname;
 
-const isActive = (href: string) => currentPath === href;
+const isActive = (href: string) => {
+  console.log(href)
+  console.log(currentPath);
+  const slash = currentPath.lastIndexOf("/")
+  const path = currentPath.substring(slash);
+  
+  return path === href;
+}
 ---
 
 <nav>
