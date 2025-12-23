@@ -10,12 +10,20 @@ const navList: { href: string; label: string }[] = [
 const currentPath = Astro.url.pathname;
 
 const isActive = (href: string) => {
-  console.log(href)
-  console.log(currentPath);
-  const slash = currentPath.lastIndexOf("/")
-  const path = currentPath.substring(slash);
-  
-  return path === href;
+  let path = currentPath;
+  // Take out trailing slash
+  if(path.endsWith("/")) {
+    path = path.slice(0, -1);
+  }
+  // Isolate page name
+  let i = path.lastIndexOf("/");
+  if(i != -1) {
+    path = path.substring(i+1);
+  }
+  const hrefName = href.substring(1);
+  console.log(path);
+  console.log(hrefName);
+  return path === hrefName;
 }
 ---
 
