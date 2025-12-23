@@ -1,7 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./public/logos/logo2_dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/light-logo.png">
-  <img alt="Project Logo" src="./public/logos/logo2.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="./public/logos/dark_banner.png">
+  <source media="(prefers-color-scheme: light)" srcset="./public/logos/light_banner.png">
+  <img alt="Project Logo" src="./public/logos/light_banner.png">
 </picture>
 
 # Stevens Mathematical Club official website
