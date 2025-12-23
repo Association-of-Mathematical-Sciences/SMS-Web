@@ -13,25 +13,25 @@ const quickCards: Card[] = [
   {
     title: "Events",
     desc: "Talks, workshops, problem nights, and guest speakers throughout the semester.",
-    href: "/SMS-Web/events",
+    href: "/events",
     cta: "See events",
   },
   {
     title: "Journal",
     desc: "Student writing and research notes—expository articles welcome.",
-    href: "/SMS-Web/journal",
+    href: "/journal",
     cta: "Read the journal",
   },
   {
     title: "About",
     desc: "What we do, how we run meetings, and how the organization is structured.",
-    href: "/SMS-Web/about",
+    href: "/about",
     cta: "Learn more",
   },
   {
     title: "Contact",
     desc: "Speaker ideas, collaborations, and general questions.",
-    href: "/SMS-Web/contact",
+    href: "/contact",
     cta: "Get in touch",
   },
 ];
@@ -43,21 +43,21 @@ const upcoming: EventPreview[] = [
     tag: "Problem Solving",
     date: "Thursdays · 6:00 PM",
     where: "Babbio 104",
-    href: "/SMS-Web/events",
+    href: "/events",
   },
   {
     title: "Faculty Talk: Modern Optimization",
     tag: "Talk",
     date: "Feb 6 · 5:30 PM",
     where: "TBD",
-    href: "/SMS-Web/events",
+    href: "/events",
   },
   {
     title: "Contest / Putnam Prep",
     tag: "Workshop",
     date: "Feb 13 · 6:00 PM",
     where: "TBD",
-    href: "/SMS-Web/events",
+    href: "/events",
   },
 ];
 
@@ -126,18 +126,18 @@ const leaders: Leader[] = [
       </p>
 
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/SMS-Web/events"
+        <a href="/events"
            class="inline-flex items-center rounded-xl bg-[#c1121f] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90">
           View Events
         </a>
 
-        <a href="/SMS-Web/journal"
+        <a href="/journal"
            class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50
                   dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
           Read the Journal
         </a>
 
-        <a href="/SMS-Web/about"
+        <a href="/about"
            class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50
                   dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
           About AMS
@@ -190,7 +190,7 @@ const leaders: Leader[] = [
         <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80">A preview—see the Events page for full details.</p>
       </div>
 
-      <a href="/SMS-Web/events"
+      <a href="/events"
          class="hidden rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-slate-50 sm:inline-flex
                 dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
         View all
@@ -213,7 +213,7 @@ const leaders: Leader[] = [
       ))}
     </div>
 
-    <a href="/SMS-Web/events"
+    <a href="/events"
        class="mt-6 inline-flex rounded-xl border border-black/10 bg-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-slate-50 sm:hidden
               dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
       View all events
@@ -234,12 +234,12 @@ const leaders: Leader[] = [
           </p>
 
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href="/SMS-Web/journal"
+            <a href="/journal"
                class="inline-flex items-center rounded-xl bg-[#003049] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90
                       dark:bg-[#fef8ec] dark:text-[#003049]">
               View journal
             </a>
-            <a href="/SMS-Web/contact"
+            <a href="/contact"
                class="inline-flex items-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50
                       dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15">
               Editorial contact
@@ -268,7 +268,7 @@ const leaders: Leader[] = [
         <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80">For official inquiries, use the Contact page.</p>
       </div>
 
-      <a href="/SMS-Web/about" class="hidden text-sm font-semibold text-[#003049] hover:underline sm:inline dark:text-[#fef8ec]">
+      <a href="/about" class="hidden text-sm font-semibold text-[#003049] hover:underline sm:inline dark:text-[#fef8ec]">
         Learn more →
       </a>
     </div>
@@ -282,7 +282,7 @@ const leaders: Leader[] = [
       >
         <div class="flex items-start gap-4">
           <a
-            href={p.href ?? "/SMS-Web/"}
+            href={p.href ?? "/"}
             class="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-[#fef8ec] transition
                   group-hover:ring-2 group-hover:ring-[#c1121f]/35 group-hover:ring-offset-2 group-hover:ring-offset-[#fef8ec]
                   dark:border-white/20 dark:bg-white/10
@@ -290,7 +290,7 @@ const leaders: Leader[] = [
             aria-label={`${p.role}: ${p.name}`}
           >
             <img
-              src={p.image ?? "/SMS-Web/leadership/placeholder.png"}
+              src={p.image ?? "/leadership/placeholder.png"}
               alt={`${p.role}: ${p.name}`}
               loading="lazy"
               class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
@@ -310,7 +310,7 @@ const leaders: Leader[] = [
 
             <h3 class="mt-1 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
               <a
-                href={p.href ?? "/SMS-Web/"}
+                href={p.href ?? "/"}
                 class="inline-block transition group-hover:underline decoration-[#c1121f]/60 underline-offset-4
                       dark:decoration-[#fef8ec]/60"
               >
@@ -330,7 +330,7 @@ const leaders: Leader[] = [
 </div>
 
 
-    <a href="/SMS-Web/about" class="mt-6 inline-flex text-sm font-semibold text-[#003049] hover:underline sm:hidden dark:text-[#fef8ec]">
+    <a href="/about" class="mt-6 inline-flex text-sm font-semibold text-[#003049] hover:underline sm:hidden dark:text-[#fef8ec]">
       Learn more →
     </a>
   </div>
