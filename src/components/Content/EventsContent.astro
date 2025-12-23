@@ -1,0 +1,268 @@
+---
+type EventItem = {
+  title: string;
+  tag: string;
+  semester: string;
+  date: string;
+  where: string;
+  href: string;
+  sortTime: number;
+};
+
+const base = import.meta.env.BASE_URL;
+const withBase = (p: string) =>
+  base === "/" ? p : (p.startsWith(base) ? p : base.replace(/\/$/, "") + p);
+
+function fileToRoute(file: string) {
+  const norm = file.replaceAll("\\", "/");
+  const idx = norm.lastIndexOf("/src/pages/");
+  if (idx === -1) return "/events";
+
+  let route = norm.slice(idx + "/src/pages".length); // "/events/..."
+  route = route.replace(/\.(md|mdx)$/, "");
+  route = route.replace(/\/index$/, "/");
+  if (!route.endsWith("/")) route += "/";
+  return route;
+}
+
+function moduleHref(m: any) {
+  if (typeof m.url === "string" && m.url) return withBase(m.url);
+  if (m.url?.pathname) return withBase(m.url.pathname);
+  if (typeof m.file === "string" && m.file) return withBase(fileToRoute(m.file));
+  return withBase("/events");
+}
+
+const monthMap: Record<string, number> = {
+  jan: 0, january: 0,
+  feb: 1, february: 1,
+  mar: 2, march: 2,
+  apr: 3, april: 3,
+  may: 4,
+  jun: 5, june: 5,
+  jul: 6, july: 6,
+  aug: 7, august: 7,
+  sep: 8, sept: 8, september: 8,
+  oct: 9, october: 9,
+  nov: 10, november: 10,
+  dec: 11, december: 11,
+};
+
+function folderNameFromFile(file: string) {
+  const parts = file.replaceAll("\\", "/").split("/");
+  return parts.at(-2) ?? ""; // e.g. "Spring_2026"
+}
+
+function inferSemester(file: string, semester?: string) {
+  return semester && semester.trim() ? semester : folderNameFromFile(file).replace(/_/g, " ");
+}
+
+function inferYear(file: string, semester?: string) {
+  const semYear = semester?.match(/\b(20\d{2})\b/)?.[1];
+  if (semYear) return Number(semYear);
+
+  const folderYear = folderNameFromFile(file).match(/_(20\d{2})$/)?.[1];
+  if (folderYear) return Number(folderYear);
+
+  return new Date().getFullYear();
+}
+
+// "Jan 27 · 5:00 PM"
+function parseSortTime(dateStr: string, year: number) {
+  const parts = dateStr.split("·").map((s) => s.trim());
+  const md = parts[0] ?? "Jan 1";
+  const time = parts[1] ?? "12:00 AM";
+
+  const [mRaw, dRaw] = md.split(/\s+/);
+  const month = monthMap[(mRaw ?? "jan").toLowerCase()] ?? 0;
+  const day = Number((dRaw ?? "1").replace(/[^\d]/g, "")) || 1;
+
+  const [t, ampmRaw] = time.split(/\s+/);
+  const [hhRaw, mmRaw] = (t ?? "12:00").split(":");
+  const ampm = (ampmRaw ?? "AM").toUpperCase();
+
+  let hh = Number(hhRaw) || 12;
+  const mm = Number(mmRaw) || 0;
+  hh = hh % 12;
+  if (ampm === "PM") hh += 12;
+
+  return new Date(year, month, day, hh, mm).getTime();
+}
+
+// Lower number means "newer semester first"
+function semesterRank(semester: string) {
+  // expects "Spring 2026" or "Fall 2025"
+  const m = semester.match(/\b(Spring|Fall|Summer)\b/i);
+  const y = semester.match(/\b(20\d{2})\b/)?.[1];
+  const year = y ? Number(y) : 0;
+
+  const term = (m?.[1] ?? "").toLowerCase();
+  const termScore = term === "spring" ? 2 : term === "summer" ? 1 : term === "fall" ? 0 : 0;
+
+  // bigger is newer; we’ll sort descending on this
+  return year * 10 + termScore;
+}
+
+function toId(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+const modules = await Astro.glob("../../pages/events/**/*.md");
+
+const events: EventItem[] = modules
+  .map((m: any) => {
+    const fm = m.frontmatter ?? {};
+    const semester = inferSemester(m.file, fm.semester);
+    const year = inferYear(m.file, semester);
+    const sortTime = parseSortTime(fm.date ?? "Jan 1 · 12:00 AM", year);
+
+    return {
+      title: fm.title ?? "Untitled event",
+      tag: fm.tag ?? "Event",
+      semester,
+      date: fm.date ?? "",
+      where: fm.where ?? "",
+      href: moduleHref(m),
+      sortTime,
+    };
+  })
+  .sort((a, b) => b.sortTime - a.sortTime);
+
+// Group by semester
+const bySemester = new Map<string, EventItem[]>();
+for (const ev of events) {
+  const list = bySemester.get(ev.semester) ?? [];
+  list.push(ev);
+  bySemester.set(ev.semester, list);
+}
+
+// Sort semesters newest -> oldest
+const semesters = Array.from(bySemester.keys()).sort((a, b) => semesterRank(b) - semesterRank(a));
+
+// Sort events inside each semester newest -> oldest
+for (const sem of semesters) {
+  bySemester.get(sem)!.sort((a, b) => b.sortTime - a.sortTime);
+}
+
+// Default to first semester section
+const defaultSemester = semesters[0] ?? "";
+---
+
+<section class="bg-[#fef8ec] dark:bg-[#003049]">
+  <div class="mx-auto max-w-6xl px-6 py-14 sm:py-18">
+    <header class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h1 class="font-serif text-3xl text-[#003049] dark:text-[#fef8ec] sm:text-4xl">Events</h1>
+        <p class="mt-3 text-slate-700 dark:text-[#fef8ec]/80">
+          Talks, workshops, and problem-solving sessions.
+        </p>
+      </div>
+
+      {semesters.length > 0 && (
+        <details class="relative w-full max-w-xs sm:w-auto">
+          <summary
+            class="list-none cursor-pointer rounded-xl border border-[#003049]/15 bg-white/70 px-4 py-2 text-sm font-semibold text-[#003049]
+                   shadow-sm backdrop-blur hover:bg-white
+                   dark:border-white/20 dark:bg-white/10 dark:text-[#fef8ec] dark:hover:bg-white/15"
+          >
+            Browse semester
+          </summary>
+
+          <div
+            class="absolute right-0 z-10 mt-2 w-full overflow-hidden rounded-2xl border border-[#003049]/15 bg-white shadow-lg
+                   dark:border-white/20 dark:bg-[#003049]"
+          >
+            <ul class="p-2">
+              {semesters.map((sem) => (
+                <li>
+                  <a
+                    href={`#${toId(sem)}`}
+                    class="block rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-[#003049]/10 hover:text-[#003049]
+                           dark:text-[#fef8ec]/90 dark:hover:bg-white/10 dark:hover:text-[#fef8ec]"
+                  >
+                    {sem}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      )}
+    </header>
+
+    {/* optional small hint link */}
+    {defaultSemester && (
+      <p class="mt-6 text-sm text-slate-600 dark:text-[#fef8ec]/70">
+        Jump to:{" "}
+        <a class="font-semibold text-[#c1121f] hover:underline" href={`#${toId(defaultSemester)}`}>
+          {defaultSemester}
+        </a>
+      </p>
+    )}
+
+    <div class="mt-10 space-y-14">
+      {semesters.map((sem) => {
+        const list = bySemester.get(sem) ?? [];
+        return (
+          <section id={toId(sem)} class="scroll-mt-28">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">
+                  {sem}
+                </h2>
+                <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80">
+                  {list.length} event{list.length === 1 ? "" : "s"}
+                </p>
+              </div>
+
+              <a
+                href="#top"
+                class="hidden text-sm font-semibold text-[#003049] hover:underline dark:text-[#fef8ec] sm:inline"
+              >
+                Back to top ↑
+              </a>
+            </div>
+
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {list.map((ev) => (
+                <a
+                  href={ev.href}
+                  class="group rounded-2xl border border-[#003049]/15 bg-white p-5 shadow-sm transition
+                         hover:-translate-y-0.5 hover:shadow-md hover:bg-slate-50
+                         dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15"
+                >
+                  <div class="flex items-center justify-between gap-3">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+                      {ev.tag}
+                    </p>
+                    <p class="text-xs font-semibold text-slate-600 dark:text-[#fef8ec]/70">
+                      {ev.where}
+                    </p>
+                  </div>
+
+                  <h3 class="mt-2 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+                    {ev.title}
+                  </h3>
+
+                  <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">
+                    <span class="font-semibold">{ev.date}</span>
+                  </p>
+
+                  <p class="mt-4 text-sm font-semibold text-[#003049] dark:text-[#fef8ec] group-hover:underline">
+                    Details →
+                  </p>
+                </a>
+              ))}
+            </div>
+
+            <a href="#top" class="mt-6 inline-flex text-sm font-semibold text-[#003049] hover:underline dark:text-[#fef8ec] sm:hidden">
+              Back to top ↑
+            </a>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<!-- for the "Back to top" anchor -->
+<div id="top"></div>

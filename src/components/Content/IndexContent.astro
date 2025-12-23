@@ -1,6 +1,16 @@
 ---
 type Card = { title: string; desc: string; href: string; cta: string };
-type EventPreview = { title: string; tag: string; date: string; where: string; href: string };
+
+type RecentEvent = {
+  title: string;
+  tag: string;
+  semester: string;
+  date: string;
+  where: string;
+  href: string;
+  sortTime: number;
+};
+
 type Leader = {
   role: string;
   name: string;
@@ -36,30 +46,105 @@ const quickCards: Card[] = [
   },
 ];
 
-// TODO: Dynamically update this with the 3 most recent events
-const upcoming: EventPreview[] = [
-  {
-    title: "Weekly Problem Solving Session",
-    tag: "Problem Solving",
-    date: "Thursdays · 6:00 PM",
-    where: "Babbio 104",
-    href: "/events",
-  },
-  {
-    title: "Faculty Talk: Modern Optimization",
-    tag: "Talk",
-    date: "Feb 6 · 5:30 PM",
-    where: "TBD",
-    href: "/events",
-  },
-  {
-    title: "Contest / Putnam Prep",
-    tag: "Workshop",
-    date: "Feb 13 · 6:00 PM",
-    where: "TBD",
-    href: "/events",
-  },
-];
+const base = import.meta.env.BASE_URL;
+const withBase = (p: string) =>
+  base === "/" ? p : (p.startsWith(base) ? p : base.replace(/\/$/, "") + p);
+
+function fileToRoute(file: string) {
+  const norm = file.replaceAll("\\", "/");
+  const idx = norm.lastIndexOf("/src/pages/");
+  if (idx === -1) return "/events";
+
+  let route = norm.slice(idx + "/src/pages".length); // "/events/..."
+  route = route.replace(/\.(md|mdx)$/, "");
+  route = route.replace(/\/index$/, "/");
+  if (!route.endsWith("/")) route += "/";
+  return route;
+}
+
+function moduleHref(m: any) {
+  if (typeof m.url === "string" && m.url) return withBase(m.url);
+  if (m.url?.pathname) return withBase(m.url.pathname);
+  if (typeof m.file === "string" && m.file) return withBase(fileToRoute(m.file));
+  return withBase("/events");
+}
+
+const monthMap: Record<string, number> = {
+  jan: 0, january: 0,
+  feb: 1, february: 1,
+  mar: 2, march: 2,
+  apr: 3, april: 3,
+  may: 4,
+  jun: 5, june: 5,
+  jul: 6, july: 6,
+  aug: 7, august: 7,
+  sep: 8, sept: 8, september: 8,
+  oct: 9, october: 9,
+  nov: 10, november: 10,
+  dec: 11, december: 11,
+};
+
+function folderNameFromFile(file: string) {
+  const parts = file.replaceAll("\\", "/").split("/");
+  return parts.at(-2) ?? ""; // "Spring_2026"
+}
+
+function inferSemester(file: string, semester?: string) {
+  return semester && semester.trim() ? semester : folderNameFromFile(file).replace(/_/g, " ");
+}
+
+function inferYear(file: string, semester?: string) {
+  const semYear = semester?.match(/\b(20\d{2})\b/)?.[1];
+  if (semYear) return Number(semYear);
+
+  const folderYear = folderNameFromFile(file).match(/_(20\d{2})$/)?.[1];
+  if (folderYear) return Number(folderYear);
+
+  return new Date().getFullYear();
+}
+
+// dateStr: "Jan 27 · 5:00 PM"
+function parseSortTime(dateStr: string, year: number) {
+  const parts = dateStr.split("·").map((s) => s.trim());
+  const md = parts[0] ?? "Jan 1";
+  const time = parts[1] ?? "12:00 AM";
+
+  const [mRaw, dRaw] = md.split(/\s+/);
+  const month = monthMap[(mRaw ?? "jan").toLowerCase()] ?? 0;
+  const day = Number((dRaw ?? "1").replace(/[^\d]/g, "")) || 1;
+
+  const [t, ampmRaw] = time.split(/\s+/);
+  const [hhRaw, mmRaw] = (t ?? "12:00").split(":");
+  const ampm = (ampmRaw ?? "AM").toUpperCase();
+
+  let hh = Number(hhRaw) || 12;
+  const mm = Number(mmRaw) || 0;
+  hh = hh % 12;
+  if (ampm === "PM") hh += 12;
+
+  return new Date(year, month, day, hh, mm).getTime();
+}
+
+const modules = await Astro.glob("../../pages/events/**/*.md");
+
+const recentEvents: RecentEvent[] = modules
+  .map((m: any) => {
+    const fm = m.frontmatter ?? {};
+    const year = inferYear(m.file, fm.semester);
+    const sortTime = parseSortTime(fm.date ?? "Jan 1 · 12:00 AM", year);
+
+    return {
+      title: fm.title ?? "Untitled event",
+      tag: fm.tag ?? "Event",
+      semester: inferSemester(m.file, fm.semester),
+      date: fm.date ?? "",
+      where: fm.where ?? "",
+      href: moduleHref(m),
+      sortTime,
+    };
+  })
+  .sort((a, b) => b.sortTime - a.sortTime)
+  .slice(0, 3);
 
 // Update these with real names + correct year folders.
 // Images: /public/leadership/2026/president.jpg etc.
@@ -231,30 +316,28 @@ const leaders: Leader[] = [
     </div>
 
     <div class="mt-8 grid gap-4 lg:grid-cols-3">
-      {upcoming.map((ev, i) => (
-        <article
-          class:list={[
-            "rounded-2xl border border-black/10 bg-white p-5 shadow-sm",
-            "dark:border-white/20 dark:bg-white/10",
-            "ams-pop",
-            i === 0 && "ams-d-0",
-            i === 1 && "ams-d-1",
-            i === 2 && "ams-d-2",
-          ]}
-        >
+      {recentEvents.map((ev) => (
+        <article class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/20 dark:bg-white/10 ams-pop">
           <div class="flex items-center justify-between gap-3">
             <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
               {ev.tag}
             </p>
-            <a href={ev.href} class="text-sm font-semibold text-[#c1121f] hover:underline dark:text-[#fef8ec]">
-              Details
-            </a>
+            <p class="text-xs font-semibold text-slate-600 dark:text-[#fef8ec]/70">
+              {ev.semester}
+            </p>
           </div>
 
-          <h3 class="mt-2 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">{ev.title}</h3>
+          <h3 class="mt-2 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+            {ev.title}
+          </h3>
+
           <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">
             <span class="font-semibold">{ev.date}</span> · {ev.where}
           </p>
+
+          <a href={ev.href} class="mt-4 inline-block text-sm font-semibold text-[#c1121f] hover:underline dark:text-[#fef8ec]">
+            Details →
+          </a>
         </article>
       ))}
     </div>
