@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://Stevens-Mathematical-Club.github.io/SMS-Web',
+	site: 'https://stevens-ams.com',
 	prefetch: {
 		prefetchAll: true,
 	},

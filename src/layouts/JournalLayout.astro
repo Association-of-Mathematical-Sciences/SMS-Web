@@ -1,0 +1,85 @@
+---
+import { parseDate } from "../lib/dates.js";
+import BaseLayout from "./BaseLayout.astro";
+
+const { frontmatter } = Astro.props;
+const pathname = Astro.url?.pathname ?? "";
+
+const { title, semester, date, description, pdf } = frontmatter ?? {};
+
+const parsedDate = parseDate(date);
+
+const required = ["title", "semester", "date", "pdf"];
+for (const key of required) {
+  if (!frontmatter?.[key]) console.warn(`[JournalLayout] Missing "${key}" in:`, pathname);
+}
+
+const pageTitle = title ? `${title} · AMS Journal` : "Journal · AMS";
+const pageDescription = description ?? (title ? `${title} (${semester ?? ""})` : "AMS Journal issue.");
+
+const base = import.meta.env.BASE_URL;
+const withBase = (p: string) =>
+  base === "/" ? p : (p.startsWith(base) ? p : base.replace(/\/$/, "") + p);
+
+const pdfSrc = typeof pdf === "string" ? withBase(pdf) : "";
+---
+
+<BaseLayout pageTitle={pageTitle} pageDescription={pageDescription}>
+  <section class="bg-[#fef8ec] dark:bg-[#003049]">
+    <div class="mx-auto max-w-6xl px-6 py-12 sm:py-16">
+      <a
+        href={withBase("/journal")}
+        class="inline-flex items-center gap-2 text-sm font-semibold text-[#003049] hover:underline dark:text-[#fef8ec]"
+      >
+        <span aria-hidden="true">←</span> Back to journal
+      </a>
+
+      <header class="mx-auto mt-8 max-w-3xl">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+          {semester} · {parsedDate}
+        </p>
+
+        <h1 class="mt-3 font-serif text-3xl leading-tight text-[#003049] dark:text-[#fef8ec] sm:text-5xl">
+          {title}
+        </h1>
+
+        {description && (
+          <p class="mt-4 text-lg leading-relaxed text-slate-700 dark:text-[#fef8ec]/80">
+            {description}
+          </p>
+        )}
+      </header>
+
+      {/* Optional markdown intro/body */}
+      <article
+        class="prose prose-slate mx-auto mt-10 max-w-3xl dark:prose-invert
+               prose-headings:font-serif
+               prose-headings:text-[#003049] dark:prose-headings:text-[#fef8ec]
+               prose-a:text-[#c1121f] prose-a:font-semibold"
+      >
+        <slot />
+      </article>
+
+      {pdfSrc && (
+        <div class="mx-auto mt-10 max-w-5xl">
+          <div class="overflow-hidden rounded-2xl border border-[#003049]/15 bg-white shadow-sm dark:border-white/20 dark:bg-white/10">
+            <div class="border-b border-[#003049]/10 px-4 py-3 text-sm text-slate-700 dark:border-white/10 dark:text-[#fef8ec]/80">
+              <span class="font-semibold">PDF:</span>{" "}
+              <a class="text-[#c1121f] hover:underline" href={pdfSrc} target="_blank" rel="noreferrer">
+                Open in new tab
+              </a>
+            </div>
+
+            <div class="h-[80vh]">
+              <iframe
+                src={pdfSrc}
+                class="h-full w-full"
+                title={title ?? "Journal PDF"}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
