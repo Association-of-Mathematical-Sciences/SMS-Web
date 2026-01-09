@@ -10,4 +10,4 @@ description:
 
 ## Putnam Competition Day
 
-The Putnam Competition will be done at the conference room at the North Building, contact the org. or Pavel Dubovski for more information
+The Putnam Competition will be done at the conference room at the North Building, contact the org. or Pavel Dubovski for more information.
