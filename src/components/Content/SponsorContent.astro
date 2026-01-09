@@ -1,0 +1,163 @@
+---
+type Tier = "Ruby" | "Platinum" | "Gold" | "Silver" | "Bronze";
+
+type Sponsor = {
+  tier: Tier;
+  name: string;
+  href: string;
+  logoSrc?: string;
+  logoAlt?: string;
+};
+
+const sponsors: Sponsor[] = [
+  {
+    tier: "Ruby",
+    name: "Example Capital",
+    href: "https://example.com",
+    logoSrc: "/sponsors/logos/placeholder.svg",
+  },
+  {
+    tier: "Platinum",
+    name: "Example Labs",
+    href: "https://example.com",
+    logoSrc: "/sponsors/logos/placeholder.svg",
+  },
+  {
+    tier: "Gold",
+    name: "Example Analytics",
+    href: "https://example.com",
+    logoSrc: "/sponsors/logos/placeholder.svg",
+  },
+  {
+    tier: "Silver",
+    name: "Example Systems",
+    href: "https://example.com",
+    logoSrc: "/sponsors/logos/placeholder.svg",
+  },
+  {
+    tier: "Bronze",
+    name: "Example Partners",
+    href: "https://example.com",
+    logoSrc: "/sponsors/logos/placeholder.svg",
+  },
+];
+
+const order: Tier[] = ["Ruby", "Platinum", "Gold", "Silver", "Bronze"];
+
+function byTier(tier: Tier) {
+  return sponsors.filter((s) => s.tier === tier);
+}
+
+const tierHoverBg: Record<Tier, string> = {
+  Ruby:
+    "hover:bg-[linear-gradient(135deg,rgba(193,18,31,0.18)_0%,rgba(255,255,255,0.90)_35%,rgba(193,18,31,0.10)_55%,rgba(255,255,255,0.80)_70%,rgba(193,18,31,0.14)_100%)] " +
+    "dark:hover:bg-[linear-gradient(135deg,rgba(193,18,31,0.22)_0%,rgba(254,248,236,0.16)_35%,rgba(193,18,31,0.12)_55%,rgba(254,248,236,0.12)_70%,rgba(193,18,31,0.18)_100%)]",
+  Platinum:
+    "hover:bg-[linear-gradient(135deg,rgba(226,232,240,0.55)_0%,rgba(255,255,255,0.95)_30%,rgba(148,163,184,0.18)_55%,rgba(255,255,255,0.90)_75%,rgba(226,232,240,0.45)_100%)] " +
+    "dark:hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(254,248,236,0.10)_30%,rgba(148,163,184,0.14)_55%,rgba(254,248,236,0.08)_75%,rgba(255,255,255,0.12)_100%)]",
+  Gold:
+    "hover:bg-[linear-gradient(135deg,rgba(245,158,11,0.20)_0%,rgba(255,255,255,0.92)_30%,rgba(245,158,11,0.14)_52%,rgba(255,255,255,0.85)_72%,rgba(245,158,11,0.18)_100%)] " +
+    "dark:hover:bg-[linear-gradient(135deg,rgba(245,158,11,0.22)_0%,rgba(254,248,236,0.12)_30%,rgba(245,158,11,0.14)_52%,rgba(254,248,236,0.10)_72%,rgba(245,158,11,0.20)_100%)]",
+  Silver:
+    "hover:bg-[linear-gradient(135deg,rgba(148,163,184,0.30)_0%,rgba(255,255,255,0.95)_30%,rgba(100,116,139,0.14)_55%,rgba(255,255,255,0.90)_75%,rgba(148,163,184,0.26)_100%)] " +
+    "dark:hover:bg-[linear-gradient(135deg,rgba(148,163,184,0.20)_0%,rgba(254,248,236,0.10)_30%,rgba(100,116,139,0.14)_55%,rgba(254,248,236,0.08)_75%,rgba(148,163,184,0.18)_100%)]",
+  Bronze:
+    "hover:bg-[linear-gradient(135deg,rgba(234,88,12,0.18)_0%,rgba(255,255,255,0.92)_30%,rgba(234,88,12,0.12)_52%,rgba(255,255,255,0.85)_72%,rgba(234,88,12,0.16)_100%)] " +
+    "dark:hover:bg-[linear-gradient(135deg,rgba(234,88,12,0.20)_0%,rgba(254,248,236,0.12)_30%,rgba(234,88,12,0.12)_52%,rgba(254,248,236,0.10)_72%,rgba(234,88,12,0.18)_100%)]",
+};
+
+const tierBar: Record<Tier, string> = {
+  Ruby: "bg-[linear-gradient(90deg,rgba(193,18,31,0.75),rgba(255,255,255,0.55),rgba(193,18,31,0.60))]",
+  Platinum: "bg-[linear-gradient(90deg,rgba(226,232,240,0.90),rgba(255,255,255,0.85),rgba(148,163,184,0.55))]",
+  Gold: "bg-[linear-gradient(90deg,rgba(245,158,11,0.80),rgba(255,255,255,0.70),rgba(245,158,11,0.65))]",
+  Silver: "bg-[linear-gradient(90deg,rgba(148,163,184,0.70),rgba(255,255,255,0.75),rgba(100,116,139,0.55))]",
+  Bronze: "bg-[linear-gradient(90deg,rgba(234,88,12,0.70),rgba(255,255,255,0.65),rgba(234,88,12,0.55))]",
+};
+---
+
+<section class="bg-[#fef8ec] dark:bg-[#003049]">
+  <div class="mx-auto max-w-6xl px-6 py-14 sm:py-18">
+    <header class="max-w-3xl">
+      <h1 class="font-serif text-3xl text-[#003049] dark:text-[#fef8ec] sm:text-4xl">
+        Sponsors
+      </h1>
+      <p class="mt-3 text-slate-700 dark:text-[#fef8ec]/80">
+        We want to extend a special thanks to the following companies who have sponsored us currently and in the past.
+      </p>
+    </header>
+
+    <div class="mt-10 space-y-14">
+      {order.map((tier) => {
+        const list = byTier(tier);
+        if (!list.length) return null;
+
+        return (
+          <section class="scroll-mt-28">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">
+                  {tier}
+                </h2>
+                <div class:list={["mt-2 h-0.75 w-40 rounded-full opacity-90", tierBar[tier]]} />
+              </div>
+
+              <p class="text-sm font-semibold text-slate-600 dark:text-[#fef8ec]/70">
+                {list.length} sponsor{list.length === 1 ? "" : "s"}
+              </p>
+            </div>
+
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {list.map((s) => (
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    "group relative isolate overflow-hidden rounded-2xl border border-[#003049]/15 bg-white p-5 shadow-sm transition",
+                    "hover:-translate-y-0.5 hover:shadow-md",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c1121f]/60 focus-visible:ring-offset-2",
+                    "dark:border-white/20 dark:bg-white/10 dark:focus-visible:ring-offset-[#003049]",
+
+                    "bg-size-[220%_220%] bg-position-[0%_40%] hover:bg-position-[100%_60%]",
+                    tierHoverBg[s.tier],
+
+                    "before:pointer-events-none before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300",
+                    "group-hover:before:opacity-100",
+                    "before:bg-[radial-gradient(90%_60%_at_30%_0%,rgba(255,255,255,0.55)_0%,transparent_55%)]",
+                    "dark:before:bg-[radial-gradient(90%_60%_at_30%_0%,rgba(254,248,236,0.22)_0%,transparent_55%)]",
+                  ]}
+                >
+                  <div class="relative z-10 flex items-start gap-4">
+                    <div class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-2xl border border-[#003049]/15 bg-white/70 p-2 dark:border-white/15 dark:bg-white/10">
+                      {s.logoSrc ? (
+                        <img
+                          src={s.logoSrc}
+                          alt={s.logoAlt ?? `${s.name} logo`}
+                          class="h-full w-full object-contain"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span class="text-[11px] font-semibold text-slate-500 dark:text-[#fef8ec]/60">
+                          SVG
+                        </span>
+                      )}
+                    </div>
+
+                    <div class="min-w-0">
+                      <h3 class="truncate font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+                        {s.name}
+                      </h3>
+                      <p class="mt-3 text-sm font-semibold text-[#c1121f] group-hover:underline">
+                        Visit →
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</section>
