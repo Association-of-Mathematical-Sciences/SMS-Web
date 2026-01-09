@@ -3,7 +3,7 @@ layout: ../../../layouts/EventsLayout.astro
 title: Quantitative Trading Competitions
 tag: Event
 semester: Spring 2026
-date: 
+date: Throughout the semester
 where: MIT and Harvard University
 description: Quantitative trading competitions for undergraduates.
 ---
