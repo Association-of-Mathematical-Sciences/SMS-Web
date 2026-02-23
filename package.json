@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@playform/compress": "^0.2.1",
-    "@tailwindcss/vite": "^4.1.18",
+    "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.16.5",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
