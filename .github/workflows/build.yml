@@ -15,10 +15,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "20"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build Astro
         run: npm run build
+        env:
+          NODE_VERSION: "20"
