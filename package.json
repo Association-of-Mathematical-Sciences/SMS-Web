@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "sms-web",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -11,12 +11,15 @@
   "dependencies": {
     "@playform/compress": "^0.2.3",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^5.16.5",
+    "astro": "^6.1.7",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

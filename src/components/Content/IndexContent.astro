@@ -48,7 +48,7 @@ const quickCards: Card[] = [
 
 const base = import.meta.env.BASE_URL;
 const withBase = (p: string) =>
-  base === "/" ? p : (p.startsWith(base) ? p : base.replace(/\/$/, "") + p);
+  base === "/" ? p : p.startsWith(base) ? p : base.replace(/\/$/, "") + p;
 
 function fileToRoute(file: string) {
   const norm = file.replaceAll("\\", "/");
@@ -65,23 +65,36 @@ function fileToRoute(file: string) {
 function moduleHref(m: any) {
   if (typeof m.url === "string" && m.url) return withBase(m.url);
   if (m.url?.pathname) return withBase(m.url.pathname);
-  if (typeof m.file === "string" && m.file) return withBase(fileToRoute(m.file));
+  if (typeof m.file === "string" && m.file)
+    return withBase(fileToRoute(m.file));
   return withBase("/events");
 }
 
 const monthMap: Record<string, number> = {
-  jan: 0, january: 0,
-  feb: 1, february: 1,
-  mar: 2, march: 2,
-  apr: 3, april: 3,
+  jan: 0,
+  january: 0,
+  feb: 1,
+  february: 1,
+  mar: 2,
+  march: 2,
+  apr: 3,
+  april: 3,
   may: 4,
-  jun: 5, june: 5,
-  jul: 6, july: 6,
-  aug: 7, august: 7,
-  sep: 8, sept: 8, september: 8,
-  oct: 9, october: 9,
-  nov: 10, november: 10,
-  dec: 11, december: 11,
+  jun: 5,
+  june: 5,
+  jul: 6,
+  july: 6,
+  aug: 7,
+  august: 7,
+  sep: 8,
+  sept: 8,
+  september: 8,
+  oct: 9,
+  october: 9,
+  nov: 10,
+  november: 10,
+  dec: 11,
+  december: 11,
 };
 
 function folderNameFromFile(file: string) {
@@ -90,7 +103,9 @@ function folderNameFromFile(file: string) {
 }
 
 function inferSemester(file: string, semester?: string) {
-  return semester && semester.trim() ? semester : folderNameFromFile(file).replace(/_/g, " ");
+  return semester && semester.trim()
+    ? semester
+    : folderNameFromFile(file).replace(/_/g, " ");
 }
 
 function inferYear(file: string, semester?: string) {
@@ -125,9 +140,9 @@ function parseSortTime(dateStr: string, year: number) {
   return new Date(year, month, day, hh, mm).getTime();
 }
 
-const modules = await Astro.glob("../../pages/events/**/*.md");
+const modules = import.meta.glob("../../pages/events/**/*.md", { eager: true });
 
-const recentEvents: RecentEvent[] = modules
+const recentEvents: RecentEvent[] = Object.values(modules)
   .map((m: any) => {
     const fm = m.frontmatter ?? {};
     const year = inferYear(m.file, fm.semester);
@@ -154,7 +169,7 @@ const leaders: Leader[] = [
     name: "Erik Hoxhaj",
     meta: "Class of 2028 · Mathematics",
     image: "/leadership/2026/president.png",
-    href: "https://www.linkedin.com/in/erikhoxhaj/"
+    href: "https://www.linkedin.com/in/erikhoxhaj/",
   },
   /*
   {
@@ -170,44 +185,50 @@ const leaders: Leader[] = [
     name: "John Conklin",
     meta: "Class of 2026 · Mathematics",
     image: "/leadership/2026/treasurer.png",
-    href:"https://www.linkedin.com/in/john-conklin-b610102b5/"
+    href: "https://www.linkedin.com/in/john-conklin-b610102b5/",
   },
   {
     role: "Secretary/Head of Tech",
     name: "Joshua Hizgiaev",
     meta: "Class of 2026 · Computer Science",
     image: "/leadership/2026/secretary.png",
-    href: "https://www.linkedin.com/in/joshuahizgiaev/"
+    href: "https://www.linkedin.com/in/joshuahizgiaev/",
   },
   {
     role: "Head of Social Media",
     name: "Kerrissa Arjoon",
     meta: "Class of 2028 · Cyber Security",
     image: "/leadership/2026/social.png",
-    href: "https://www.linkedin.com/in/kerrissa-arjoon-b32a822b2/"
+    href: "https://www.linkedin.com/in/kerrissa-arjoon-b32a822b2/",
   },
   {
     role: "Journal Head",
     name: "Matthew Soltys",
     meta: "Class of 2026 · Computer Science",
     image: "/leadership/2026/research.png",
-    href: "https://www.linkedin.com/in/matthewsoltys/"
+    href: "https://www.linkedin.com/in/matthewsoltys/",
   },
   {
     role: "Alumni",
     name: "Ethan Kalika",
     meta: "Class of 2025 · Computer Science",
     image: "/leadership/2026/alumni.png",
-    href: "https://www.linkedin.com/in/ethankalika/"
-  }
+    href: "https://www.linkedin.com/in/ethankalika/",
+  },
 ];
 ---
 
 <section class="relative overflow-hidden bg-[#fef8ec] dark:bg-[#003049]">
   <!-- soft background blobs -->
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-[#c1121f]/10 blur-3xl"></div>
-    <div class="absolute -bottom-48 -right-30 h-105 w-105 rounded-full bg-[#003049]/10 blur-3xl dark:bg-white/10"></div>
+    <div
+      class="absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-[#c1121f]/10 blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute -bottom-48 -right-30 h-105 w-105 rounded-full bg-[#003049]/10 blur-3xl dark:bg-white/10"
+    >
+    </div>
   </div>
 
   <!-- HERO -->
@@ -220,8 +241,11 @@ const leaders: Leader[] = [
         Association of Mathematical Sciences
       </h1>
 
-      <p class="mt-4 text-lg text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
-        Talks, problem solving, and student research—organized by students for the Stevens community.
+      <p
+        class="mt-4 text-lg text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1"
+      >
+        Talks, problem solving, and student research—organized by students for
+        the Stevens community.
       </p>
 
       <div class="mt-8 flex flex-wrap gap-3 ams-reveal ams-d-2">
@@ -252,18 +276,44 @@ const leaders: Leader[] = [
         </a>
       </div>
 
-      <dl class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 ams-reveal ams-d-3">
-        <div class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10">
-          <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">Focus</dt>
-          <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">Community</dd>
+      <dl
+        class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 ams-reveal ams-d-3"
+      >
+        <div
+          class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10"
+        >
+          <dt
+            class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70"
+          >
+            Focus
+          </dt>
+          <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">
+            Community
+          </dd>
         </div>
-        <div class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10">
-          <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">Programming</dt>
-          <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">Talks + Workshops</dd>
+        <div
+          class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10"
+        >
+          <dt
+            class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70"
+          >
+            Programming
+          </dt>
+          <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">
+            Talks + Workshops
+          </dd>
         </div>
-        <div class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10">
-          <dt class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">Journal</dt>
-          <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">Student Writing</dd>
+        <div
+          class="rounded-2xl border border-black/10 bg-white/60 p-4 dark:border-white/20 dark:bg-white/10"
+        >
+          <dt
+            class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70"
+          >
+            Journal
+          </dt>
+          <dd class="mt-1 font-semibold text-[#003049] dark:text-[#fef8ec]">
+            Student Writing
+          </dd>
         </div>
       </dl>
     </div>
@@ -271,34 +321,44 @@ const leaders: Leader[] = [
 
   <!-- EXPLORE -->
   <div class="mx-auto max-w-6xl px-6 pb-14">
-    <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0">
+    <h2
+      class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0"
+    >
       Explore
     </h2>
-    <p class="mt-2 max-w-2xl text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
+    <p
+      class="mt-2 max-w-2xl text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1"
+    >
       Quick links to the parts of the site you'll use most.
     </p>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {quickCards.map((c, i) => (
-        <a
-          href={c.href}
-          class:list={[
-            "group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md",
-            "dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15",
-            "ams-pop",
-            i === 0 && "ams-d-0",
-            i === 1 && "ams-d-1",
-            i === 2 && "ams-d-2",
-            i === 3 && "ams-d-3",
-          ]}
-        >
-          <h3 class="font-serif text-lg text-[#003049] dark:text-[#fef8ec]">{c.title}</h3>
-          <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">{c.desc}</p>
-          <p class="mt-4 text-sm font-semibold text-[#003049] dark:text-[#fef8ec] group-hover:underline">
-            {c.cta} →
-          </p>
-        </a>
-      ))}
+      {
+        quickCards.map((c, i) => (
+          <a
+            href={c.href}
+            class:list={[
+              "group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md",
+              "dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15",
+              "ams-pop",
+              i === 0 && "ams-d-0",
+              i === 1 && "ams-d-1",
+              i === 2 && "ams-d-2",
+              i === 3 && "ams-d-3",
+            ]}
+          >
+            <h3 class="font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+              {c.title}
+            </h3>
+            <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">
+              {c.desc}
+            </p>
+            <p class="mt-4 text-sm font-semibold text-[#003049] dark:text-[#fef8ec] group-hover:underline">
+              {c.cta} →
+            </p>
+          </a>
+        ))
+      }
     </div>
   </div>
 
@@ -306,10 +366,14 @@ const leaders: Leader[] = [
   <div class="mx-auto max-w-6xl px-6 pb-14">
     <div class="flex items-end justify-between gap-4">
       <div>
-        <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0">
+        <h2
+          class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0"
+        >
           Upcoming events
         </h2>
-        <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
+        <p
+          class="mt-2 text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1"
+        >
           A preview—see the Events page for full details.
         </p>
       </div>
@@ -325,30 +389,35 @@ const leaders: Leader[] = [
     </div>
 
     <div class="mt-8 grid gap-4 lg:grid-cols-3">
-      {recentEvents.map((ev) => (
-        <article class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/20 dark:bg-white/10 ams-pop">
-          <div class="flex items-center justify-between gap-3">
-            <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
-              {ev.tag}
+      {
+        recentEvents.map((ev) => (
+          <article class="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/20 dark:bg-white/10 ams-pop">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+                {ev.tag}
+              </p>
+              <p class="text-xs font-semibold text-slate-600 dark:text-[#fef8ec]/70">
+                {ev.semester}
+              </p>
+            </div>
+
+            <h3 class="mt-2 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+              {ev.title}
+            </h3>
+
+            <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">
+              <span class="font-semibold">{ev.date}</span> · {ev.where}
             </p>
-            <p class="text-xs font-semibold text-slate-600 dark:text-[#fef8ec]/70">
-              {ev.semester}
-            </p>
-          </div>
 
-          <h3 class="mt-2 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
-            {ev.title}
-          </h3>
-
-          <p class="mt-2 text-sm text-slate-700 dark:text-[#fef8ec]/80">
-            <span class="font-semibold">{ev.date}</span> · {ev.where}
-          </p>
-
-          <a href={ev.href} class="mt-4 inline-block text-sm font-semibold text-[#c1121f] hover:underline dark:text-[#fef8ec]">
-            Details →
-          </a>
-        </article>
-      ))}
+            <a
+              href={ev.href}
+              class="mt-4 inline-block text-sm font-semibold text-[#c1121f] hover:underline dark:text-[#fef8ec]"
+            >
+              Details →
+            </a>
+          </article>
+        ))
+      }
     </div>
 
     <a
@@ -363,17 +432,26 @@ const leaders: Leader[] = [
 
   <!-- JOURNAL SPOTLIGHT -->
   <div class="mx-auto max-w-6xl px-6 pb-14">
-    <div class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10 dark:border-white/20 dark:bg-white/10 ams-reveal">
-      <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+    <div
+      class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10 dark:border-white/20 dark:bg-white/10 ams-reveal"
+    >
+      <div
+        class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"
+      >
         <div class="max-w-2xl">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+          <p
+            class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70"
+          >
             Student journal
           </p>
-          <h2 class="mt-2 font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl">
+          <h2
+            class="mt-2 font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl"
+          >
             Undergraduate writing and research.
           </h2>
           <p class="mt-3 text-slate-700 dark:text-[#fef8ec]/80">
-            Expository articles, reading notes, and student research—written for an undergraduate audience.
+            Expository articles, reading notes, and student research—written for
+            an undergraduate audience.
           </p>
 
           <div class="mt-6 flex flex-wrap gap-3">
@@ -395,11 +473,11 @@ const leaders: Leader[] = [
         </div>
 
         <aside class="w-full max-w-sm ams-pop ams-d-1">
-          <img 
+          <img
             src="/journal/pngs/placeholder.png"
-            alt="Journal Cover" 
+            alt="Journal Cover"
             class="aspect-4/5 w-full rounded-2xl border border-black/10 object-cover shadow-sm dark:border-white/20"
-          >
+          />
         </aside>
       </div>
     </div>
@@ -409,10 +487,14 @@ const leaders: Leader[] = [
   <div class="mx-auto max-w-6xl px-6 pb-20">
     <div class="flex items-end justify-between gap-4">
       <div>
-        <h2 class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0">
+        <h2
+          class="font-serif text-2xl text-[#003049] dark:text-[#fef8ec] sm:text-3xl ams-reveal ams-d-0"
+        >
           Current leadership
         </h2>
-        <p class="mt-2 text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1">
+        <p
+          class="mt-2 text-slate-700 dark:text-[#fef8ec]/80 ams-reveal ams-d-1"
+        >
           For official inquiries, use the Contact page.
         </p>
       </div>
@@ -427,56 +509,62 @@ const leaders: Leader[] = [
     </div>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {leaders.map((p, i) => (
-        <article
-          class:list={[
-            "group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
-            "dark:border-white/20 dark:bg-white/10",
-            "ams-pop",
-            i % 6 === 0 && "ams-d-0",
-            i % 6 === 1 && "ams-d-1",
-            i % 6 === 2 && "ams-d-2",
-            i % 6 === 3 && "ams-d-3",
-            i % 6 === 4 && "ams-d-4",
-            i % 6 === 5 && "ams-d-5",
-          ]}
-        >
-          <div class="flex items-start gap-4">
-            <a
-              href={p.href ?? "/"}
-              class="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-[#fef8ec] transition
+      {
+        leaders.map((p, i) => (
+          <article
+            class:list={[
+              "group rounded-2xl border border-black/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
+              "dark:border-white/20 dark:bg-white/10",
+              "ams-pop",
+              i % 6 === 0 && "ams-d-0",
+              i % 6 === 1 && "ams-d-1",
+              i % 6 === 2 && "ams-d-2",
+              i % 6 === 3 && "ams-d-3",
+              i % 6 === 4 && "ams-d-4",
+              i % 6 === 5 && "ams-d-5",
+            ]}
+          >
+            <div class="flex items-start gap-4">
+              <a
+                href={p.href ?? "/"}
+                class="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-[#fef8ec] transition
                      group-hover:ring-2 group-hover:ring-[#c1121f]/35 group-hover:ring-offset-2 group-hover:ring-offset-[#fef8ec]
                      dark:border-white/20 dark:bg-white/10
                      dark:group-hover:ring-[#fef8ec]/35 dark:group-hover:ring-offset-[#003049]"
-              aria-label={`${p.role}: ${p.name}`}
-            >
-              <img
-                src={p.image ?? "/leadership/placeholder.png"}
-                alt={`${p.role}: ${p.name}`}
-                loading="lazy"
-                class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-              />
-              <span class="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/5 dark:group-hover:bg-white/5" />
-            </a>
+                aria-label={`${p.role}: ${p.name}`}
+              >
+                <img
+                  src={p.image ?? "/leadership/placeholder.png"}
+                  alt={`${p.role}: ${p.name}`}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                />
+                <span class="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/5 dark:group-hover:bg-white/5" />
+              </a>
 
-            <div class="min-w-0">
-              <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
-                {p.role}
-              </p>
-              <h3 class="mt-1 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
-                <a
-                  href={p.href ?? "/"}
-                  class="inline-block transition group-hover:underline decoration-[#c1121f]/60 underline-offset-4
+              <div class="min-w-0">
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-[#fef8ec]/70">
+                  {p.role}
+                </p>
+                <h3 class="mt-1 font-serif text-lg text-[#003049] dark:text-[#fef8ec]">
+                  <a
+                    href={p.href ?? "/"}
+                    class="inline-block transition group-hover:underline decoration-[#c1121f]/60 underline-offset-4
                          dark:decoration-[#fef8ec]/60"
-                >
-                  {p.name}
-                </a>
-              </h3>
-              {p.meta && <p class="mt-1 text-sm text-slate-700 dark:text-[#fef8ec]/80">{p.meta}</p>}
+                  >
+                    {p.name}
+                  </a>
+                </h3>
+                {p.meta && (
+                  <p class="mt-1 text-sm text-slate-700 dark:text-[#fef8ec]/80">
+                    {p.meta}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))
+      }
     </div>
 
     <a
@@ -488,4 +576,3 @@ const leaders: Leader[] = [
     </a>
   </div>
 </section>
-
